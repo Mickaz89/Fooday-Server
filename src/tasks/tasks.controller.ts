@@ -36,6 +36,7 @@ export class TasksController {
         filterDto,
       )}`,
     );
+    console.log('current user ', user);
     return this.tasksService.getTasks(filterDto, user);
   }
 
