@@ -34,7 +34,7 @@ async function bootstrap() {
   app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
-  const port = process.env.PORT;
+  const port = process.env.PORT || 3000;
   config.update({
     accessKeyId: configService.get('AWS_ACCESS_KEY_ID'),
     secretAccessKey: configService.get('AWS_SECRET_ACCESS_KEY'),
