@@ -11,21 +11,18 @@ const whitelist = [
   'http://localhost:3000',
   'localhost' /** other domains if any */,
 ];
-let corsOptions;
 
-if (process.env.NODE_ENV === 'production') {
-  corsOptions = {
-    credentials: true,
-    origin: function (origin, callback) {
-      console.log('origin', origin);
-      if (whitelist.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  };
-}
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    console.log('origin', origin);
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 async function bootstrap() {
   const logger = new Logger();
