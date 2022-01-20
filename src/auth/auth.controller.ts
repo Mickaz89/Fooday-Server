@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { GetUser } from './get-user.decorator';
@@ -6,6 +6,7 @@ import { User } from './user.entity';
 
 @Controller('auth')
 export class AuthController {
+  private logger = new Logger('ProductsController');
   constructor(private authService: AuthService) {}
 
   @Post('/signup')

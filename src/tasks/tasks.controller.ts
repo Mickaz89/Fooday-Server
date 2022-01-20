@@ -23,20 +23,18 @@ import { Logger } from '@nestjs/common';
 @UseGuards(AuthGuard())
 export class TasksController {
   private logger = new Logger('TasksController');
-
   constructor(private tasksService: TasksService) {}
-
   @Get()
   getTasks(
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: User,
   ): Promise<Task[]> {
     this.logger.verbose(
-      `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+      `User "${user.email}" retrieving all tasks. Filters: ${JSON.stringify(
         filterDto,
       )}`,
     );
-    console.log('current user ', user);
+    console.log('TASKS CONTROLLER USER', user);
     return this.tasksService.getTasks(filterDto, user);
   }
 
@@ -51,7 +49,7 @@ export class TasksController {
     @GetUser() user: User,
   ): Promise<Task> {
     this.logger.verbose(
-      `User "${user.username}" creating a new task. Data: ${JSON.stringify(
+      `User "${user.email}" creating a new task. Data: ${JSON.stringify(
         createTaskDto,
       )}`,
     );
