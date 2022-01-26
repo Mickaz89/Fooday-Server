@@ -34,7 +34,6 @@ async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());
   const port = process.env.PORT || 3000;
