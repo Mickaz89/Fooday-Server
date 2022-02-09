@@ -10,11 +10,15 @@ import {
 } from 'typeorm';
 import { Category } from 'src/categories/category.entity';
 import * as moment from 'moment';
+import { Reception } from 'src/receptions/reception.entity';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ nullable: true })
+  pictureUrl: string;
 
   @Column()
   name: string;
@@ -47,6 +51,9 @@ export class Product {
   // @JoinColumn()
   // category: string;
   @ManyToOne((type) => Category, (category) => category.products)
-  @Transform(({ obj }) => obj.category.name)
+  // @Transform(({ obj }) => obj.category.name)
   category: Category;
+
+  @ManyToOne((type) => Reception, (reception) => reception.products)
+  reception: Reception;
 }

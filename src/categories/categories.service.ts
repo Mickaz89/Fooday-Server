@@ -24,4 +24,9 @@ export class CategoriesService {
   async getAllCategories(user: User) {
     return this.categoriesRepository.getAllCategories(user);
   }
+
+  async getCategoryIdByName(name: string) {
+    console.log('get category id by name');
+    return this.categoriesRepository.findOne({ where: { name } });
+  }
 }

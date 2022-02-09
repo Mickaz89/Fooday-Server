@@ -1,5 +1,6 @@
 import { IsDate, IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
 import { Category } from 'src/categories/category.entity';
+import { Reception } from 'src/receptions/reception.entity';
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -19,5 +20,11 @@ export class CreateProductDto {
   category: Category;
 
   @IsNotEmpty()
+  reception: Reception;
+
+  @IsNotEmpty()
   quantity: number;
+
+  @IsOptional()
+  pictureUrl: string;
 }

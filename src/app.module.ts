@@ -8,6 +8,9 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { FileService } from './file/file.service';
 import { FileModule } from './file/file.module';
+import { SendgridService } from './sendgrid/sendgrid.service';
+import { MailController } from './mail/mail.controller';
+import { ReceptionsModule } from './receptions/receptions.module';
 
 @Module({
   imports: [
@@ -42,6 +45,9 @@ import { FileModule } from './file/file.module';
     ProductsModule,
     CategoriesModule,
     FileModule,
+    ReceptionsModule,
   ],
+  providers: [SendgridService],
+  controllers: [MailController],
 })
 export class AppModule {}

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Injectable,
   Logger,
   ParseArrayPipe,
   Post,
@@ -22,31 +23,34 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { ProductsService } from './products.service';
 import { CreateBulkProductsDto } from './dto/create-bulk-products.dto';
+import { CategoriesService } from 'src/categories/categories.service';
+import { use } from 'passport';
 
 @Controller('products')
 @UseGuards(AuthGuard())
 export class ProductsController {
   private logger = new Logger('ProductsController');
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private categoriesService: CategoriesService,
+  ) {}
   @Get()
   getProducts(@GetUser() user: User) {
     // this.logger.verbose(`User "${user.email}" retrieving all products.`);
-    console.log('current user ', user && user);
     return this.productsService.getAllProducts(user);
   }
 
-  @Post()
-  createProduct(
-    @Body() createTaskDto: CreateProductDto,
-    @GetUser() user: User,
-  ): Promise<Product> {
-    this.logger.verbose(
-      `User "${user.email}" creating a new task. Data: ${JSON.stringify(
-        createTaskDto,
-      )}`,
-    );
-    return this.productsService.createProduct(createTaskDto, user);
-  }
+  // @Post()
+  // @UseInterceptors(FileInterceptor('file'))
+  // createProduct(
+  //   @Body() createProductDto: CreateProductDto,
+  //   @GetUser() user: User,
+  //   @UploadedFile() file?: Express.Multer.File,
+  // ): Promise<Product> {
+  //   console.log('CREATE PRODUCT CONTROLLER', file);
+  //   return this.productsService.createProduct(createProductDto, user, file);
+  // }
+
   @Post('bulk')
   createBulkProducts(
     @Body() createBulkProductsDto: CreateBulkProductsDto,
@@ -86,16 +90,19 @@ export class ProductsController {
     const headers = lines[0].split(';');
 
     for (let i = 1; i < lines.length; i++) {
-      const obj = {};
+      const obj: any = {};
       const currentline = lines[i].split(';');
 
       for (let j = 0; j < headers.length; j++) {
         obj[headers[j]] = currentline[j];
       }
 
-      const product = obj as Product;
-      console.log(product);
-      this.createProduct(product, user);
+      console.log(obj);
+      const categoryId = await this.categoriesService.getCategoryIdByName(
+        obj.category,
+      );
+      console.log('category id ', categoryId);
+      // this.createProduct(product, user);
       // result.push(obj);
       // this.createProduct(obj)
     }
@@ -106,31 +113,84 @@ export class ProductsController {
     @GetUser() user: User,
     @UploadedFile() file: Express.Multer.File,
   ) {
-  
-    return this.productsService.addAvatar(file.buffer, file.originalname);
+    return this.productsService.addAvatar(file.buffer, file.originalname, user);
   }
-  @Get('file')
-  async getFile(@GetUser() user: User) {
-    const file = await this.productsService.getFile();
-    const fileContent = file.Body.toString();
-    console.log('file ', fileContent);
-    const lines = fileContent.split('\r\n');
-    const headers = lines[0].split(';');
+  @Post('uploader')
+  @UseInterceptors(FileInterceptor('file'))
+  async createByFile(
+    @GetUser() user: User,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    //Upload file
+    // const upload = this.productsService.addAvatar(
+    //   file.buffer,
+    //   file.originalname,
+    //   user,
+    // );
 
-    for (let i = 1; i < lines.length; i++) {
-      const obj = {};
-      const currentline = lines[i].split(';');
+    // Get the uploaded file
+    // const fileUploaded = await this.productsService.getFile(file.originalname);
+    // const fileContent = fileUploaded.Body.toString();
+    // console.log('file ', fileContent);
+    // const lines = fileContent.split('\r\n');
+    // const headers = lines[0].split(';');
 
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentline[j];
-      }
+    // const result = [];
 
-      const product = obj as Product;
-      console.log(product);
-      // this.createProduct(product, user);
-      // result.push(obj);
-      // this.createProduct(obj)
-    }
-    return lines;
+    // for (let i = 1; i < lines.length; i++) {
+    //   const obj = {};
+    //   const currentline = lines[i].split(';');
+
+    //   for (let j = 0; j < headers.length; j++) {
+    //     obj[headers[j]] = currentline[j];
+    //   }
+
+    //   const product = obj as Product;
+    //   console.log(obj);
+
+    //   // this.createProduct(product, user);
+    //   // result.push(obj);
+    //   // this.createProduct(obj)
+    // }
+    // // console.log('lines ', lines);
+    // return fileUploaded;
+    // return await this.productsService.createProductsByFile(file, user);
+    return false;
   }
+
+  @Post('photo')
+  @UseInterceptors(FileInterceptor('image'))
+  async addPhoto(
+    @GetUser() user: User,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.productsService.addAvatar(file.buffer, file.originalname, user);
+  }
+
+  // @Get('file')
+  // async getFile(@GetUser() user: User) {
+  //   const file = await this.productsService.getFile();
+  //   const fileContent = file.Body.toString();
+  //   console.log('file ', fileContent);
+  //   const lines = fileContent.split('\r\n');
+  //   const headers = lines[0].split(';');
+
+  //   const result = [];
+
+  //   for (let i = 1; i < lines.length; i++) {
+  //     const obj = {};
+  //     const currentline = lines[i].split(';');
+
+  //     for (let j = 0; j < headers.length; j++) {
+  //       obj[headers[j]] = currentline[j];
+  //     }
+
+  //     const product = obj as Product;
+  //     console.log(product);
+  //     this.createProduct(product, user);
+  //     // result.push(obj);
+  //     // this.createProduct(obj)
+  //   }
+  //   return lines;
+  // }
 }

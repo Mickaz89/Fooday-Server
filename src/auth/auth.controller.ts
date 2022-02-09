@@ -26,7 +26,7 @@ export class AuthController {
 
   @Get('/')
   getUser(@GetUser() user: User): User {
-    console.log('current user ', user);
+    
     return user;
   }
 }

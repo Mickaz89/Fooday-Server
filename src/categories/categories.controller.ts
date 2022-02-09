@@ -13,7 +13,6 @@ export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
   @Get()
   getCategories(@GetUser() user: User) {
-    this.logger.verbose(`Retrieving all products.`);
     return this.categoriesService.getAllCategories(user);
   }
 
@@ -22,7 +21,6 @@ export class CategoriesController {
     @Body() createCategoryDto: CreateCategoryDto,
     @GetUser() user: User,
   ): Promise<Category> {
-    console.log(user);
     this.logger.verbose(
       `User "${user.email}" creating a new task. Data: ${JSON.stringify(
         createCategoryDto,
