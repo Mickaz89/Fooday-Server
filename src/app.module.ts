@@ -5,12 +5,19 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import { ProductsModule } from './products/products.module';
-import { CategoriesModule } from './categories/categories.module';
 import { FileService } from './file/file.service';
 import { FileModule } from './file/file.module';
 import { SendgridService } from './sendgrid/sendgrid.service';
 import { MailController } from './mail/mail.controller';
 import { ReceptionsModule } from './receptions/receptions.module';
+import { ProductReceptionController } from './product-reception/product-reception.controller';
+import { ProductReceptionModule } from './product-reception/product-reception.module';
+import { ProductInventoryController } from './product-inventory/product-inventory.controller';
+import { ProductInventoryModule } from './product-inventory/product-inventory.module';
+import { ProductHealthController } from './product-health/product-health.controller';
+import { ProductHealthModule } from './product-health/product-health.module';
+import { ProductCategoryController } from './product-category/product-category.controller';
+import { ProductCategoryModule } from './product-category/product-category.module';
 
 @Module({
   imports: [
@@ -43,11 +50,21 @@ import { ReceptionsModule } from './receptions/receptions.module';
     }),
     AuthModule,
     ProductsModule,
-    CategoriesModule,
+    ProductReceptionModule,
+    ProductCategoryModule,
+    ProductInventoryModule,
+    ProductHealthModule,
+    // CategoriesModule,
     FileModule,
     ReceptionsModule,
   ],
   providers: [SendgridService],
-  controllers: [MailController],
+  controllers: [
+    MailController,
+    ProductReceptionController,
+    ProductInventoryController,
+    ProductHealthController,
+    ProductCategoryController,
+  ],
 })
 export class AppModule {}

@@ -9,10 +9,12 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Product } from 'src/products/product.entity';
 import * as moment from 'moment';
+import { ProductReception } from 'src/product-reception/product_reception.entity';
 
 const date = new Date();
 
@@ -25,18 +27,21 @@ export class Reception {
   reference: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  @Transform(({ obj }) => {
-    const start = moment(Date.now());
-    const end = moment(obj.delivery_date);
-    return start.to(end);
-  })
+  // @Transform(({ obj }) => {
+  //   const start = moment(Date.now());
+  //   const end = moment(obj.delivery_date);
+  //   return start.to(end);
+  // })
   delivery_date: Date;
 
   @CreateDateColumn()
   created_date: Date;
 
-  @OneToMany((type) => Product, (product) => product.reception)
-  products: Product[];
+  @OneToMany(
+    (type) => ProductReception,
+    (product_reception) => product_reception.reception,
+  )
+  products: ProductReception[];
 
   @ManyToOne((_type) => User, (user) => user.receptions, { eager: false })
   user: User;

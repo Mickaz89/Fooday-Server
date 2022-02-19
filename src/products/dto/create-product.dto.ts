@@ -1,30 +1,32 @@
 import { IsDate, IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
-import { Category } from 'src/categories/category.entity';
 import { Reception } from 'src/receptions/reception.entity';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ProductCategory } from 'src/product-category/product_category.entity';
+import { ProductReception } from 'src/product-reception/product_reception.entity';
+import { ProductInventory } from 'src/product-inventory/product_inventory.entity';
+import { ProductHealth } from 'src/product-health/product_health.entity';
 
 export class CreateProductDto {
   @IsNotEmpty()
   name: string;
-
+  
+  @IsOptional()
   description: string;
 
-  @IsNotEmpty()
-  @IsDateString()
-  expiration_date: Date;
+  // @IsNotEmpty()
+  // product_category: ProductCategory;
 
-  @IsDateString()
-  @IsOptional()
-  last_open: Date;
+  // @IsNotEmpty()
+  // product_reception: ProductReception;
 
-  @IsNotEmpty()
-  category: Category;
+  // @IsNotEmpty()
+  // product_inventory: ProductInventory;
 
-  @IsNotEmpty()
-  reception: Reception;
-
-  @IsNotEmpty()
-  quantity: number;
+  // @IsNotEmpty()
+  // product_health: ProductHealth;
 
   @IsOptional()
   pictureUrl: string;
 }
+
+export class UpdateProductDto extends PartialType(CreateProductDto) {}

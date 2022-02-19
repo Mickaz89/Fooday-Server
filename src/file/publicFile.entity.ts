@@ -19,10 +19,13 @@ class PublicFile {
   public name: string;
 
   @Column()
+  public key: string;
+
+  @Column()
   public url: string;
 
   @Column()
-  public key: string;
+  public type: string;
 
   @ManyToOne(() => User, (user) => user.files, { eager: false })
   @Exclude({ toPlainOnly: true })

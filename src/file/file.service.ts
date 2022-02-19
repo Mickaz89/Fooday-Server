@@ -15,19 +15,22 @@ export class FileService {
     private readonly configService: ConfigService,
   ) {}
 
-  async uploadPublicFile(file: Buffer, filename: string, user: User) {
+  async uploadPublicFile(file: Buffer, name: string, type: string, user: User) {
     const s3 = new S3();
     const uploadResult = await s3
       .upload({
         Bucket: this.configService.get('AWS_PUBLIC_BUCKET_NAME'),
         Body: file,
-        Key: `${uuid()}-${filename}`,
+        Key: `${uuid()}-${name}`,
         Tagging: 'key1=1',
       })
       .promise();
 
+    const filename = name.split('.')[0];
+
     const newFile = this.publicFilesRepository.create({
       name: filename,
+      type,
       key: uploadResult.Key,
       url: uploadResult.Location,
       user: user,
@@ -59,5 +62,16 @@ export class FileService {
     });
     console.log('file ', file);
     return file.key;
+  }
+  async getFileUrlByName(name) {
+    try {
+      const file = await this.publicFilesRepository.findOne({
+        where: { name },
+      });
+      console.log('file ', file);
+      return file.url;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

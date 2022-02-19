@@ -1,5 +1,4 @@
 import { IsDate, IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
-import { Category } from 'src/categories/category.entity';
 
 export class CreateReceptionDto {
   @IsOptional()

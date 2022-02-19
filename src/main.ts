@@ -16,6 +16,7 @@ const whitelist = [
   'http://10.100.102.3:19006',
   'http://127.0.0.1:19000',
   'exp://10.100.102.3:19000',
+  'foody-mobile',
 ];
 
 const corsOptions = {
@@ -33,6 +34,7 @@ const corsOptions = {
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
+  app.enableCors(corsOptions);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());

@@ -23,17 +23,13 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { ProductsService } from './products.service';
 import { CreateBulkProductsDto } from './dto/create-bulk-products.dto';
-import { CategoriesService } from 'src/categories/categories.service';
 import { use } from 'passport';
 
 @Controller('products')
 @UseGuards(AuthGuard())
 export class ProductsController {
   private logger = new Logger('ProductsController');
-  constructor(
-    private productsService: ProductsService,
-    private categoriesService: CategoriesService,
-  ) {}
+  constructor(private productsService: ProductsService) {}
   @Get()
   getProducts(@GetUser() user: User) {
     // this.logger.verbose(`User "${user.email}" retrieving all products.`);
@@ -50,6 +46,14 @@ export class ProductsController {
   //   console.log('CREATE PRODUCT CONTROLLER', file);
   //   return this.productsService.createProduct(createProductDto, user, file);
   // }
+
+  @Post('create')
+  createProduct(
+    @Body() createProductDto: CreateProductDto,
+    @GetUser() user: User,
+  ) {
+    return this.productsService.createProduct(createProductDto);
+  }
 
   @Post('bulk')
   createBulkProducts(
@@ -98,10 +102,10 @@ export class ProductsController {
       }
 
       console.log(obj);
-      const categoryId = await this.categoriesService.getCategoryIdByName(
-        obj.category,
-      );
-      console.log('category id ', categoryId);
+      // const categoryId = await this.categoriesService.getCategoryIdByName(
+      //   obj.category,
+      // );
+      // console.log('category id ', categoryId);
       // this.createProduct(product, user);
       // result.push(obj);
       // this.createProduct(obj)
