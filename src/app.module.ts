@@ -18,6 +18,8 @@ import { ProductHealthController } from './product-health/product-health.control
 import { ProductHealthModule } from './product-health/product-health.module';
 import { ProductCategoryController } from './product-category/product-category.controller';
 import { ProductCategoryModule } from './product-category/product-category.module';
+import { MealModule } from './meal/meal.module';
+import { IngredientModule } from './ingredient/ingredient.module';
 
 @Module({
   imports: [
@@ -57,6 +59,8 @@ import { ProductCategoryModule } from './product-category/product-category.modul
     // CategoriesModule,
     FileModule,
     ReceptionsModule,
+    MealModule,
+    IngredientModule,
   ],
   providers: [SendgridService],
   controllers: [
