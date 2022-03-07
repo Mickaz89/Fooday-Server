@@ -34,7 +34,7 @@ const corsOptions = {
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-  app.enableCors(corsOptions);
+  // app.enableCors(corsOptions);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformInterceptor());

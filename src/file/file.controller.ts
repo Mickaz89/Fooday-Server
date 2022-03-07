@@ -1,5 +1,5 @@
 import {
-    Body,
+  Body,
   Controller,
   Post,
   UploadedFile,
@@ -22,11 +22,16 @@ export class FileController {
     @GetUser() user: User,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.fileServices.uploadPublicFile(
-      file.buffer,
-      body.name,
-      'image',
-      user,
-    );
+    try {
+      console.log('FILE CONTROLLER POST IMAGE ', file);
+      return this.fileServices.uploadPublicFile(
+        file.buffer,
+        file.originalname,
+        'image',
+        user,
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

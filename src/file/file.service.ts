@@ -15,21 +15,26 @@ export class FileService {
     private readonly configService: ConfigService,
   ) {}
 
-  async uploadPublicFile(file: Buffer, name: string, type: string, user: User) {
+  async uploadPublicFile(
+    buffer: Buffer,
+    name: string,
+    type: string,
+    user: User,
+  ) {
     const s3 = new S3();
     const uploadResult = await s3
       .upload({
         Bucket: this.configService.get('AWS_PUBLIC_BUCKET_NAME'),
-        Body: file,
+        Body: buffer,
         Key: `${uuid()}-${name}`,
         Tagging: 'key1=1',
       })
       .promise();
 
-    const filename = name.split('.')[0];
+    // const filename = name.split('.')[0];
 
     const newFile = this.publicFilesRepository.create({
-      name: filename,
+      name: name,
       type,
       key: uploadResult.Key,
       url: uploadResult.Location,

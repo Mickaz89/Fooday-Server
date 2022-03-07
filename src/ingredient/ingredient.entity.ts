@@ -28,7 +28,10 @@ export class Ingredient {
   @Column()
   unit: string;
 
-  @ManyToOne(() => Meal, (meal) => meal.ingredients, { eager: false })
+  @ManyToOne(() => Meal, (meal) => meal.ingredients, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   meal: Meal;
 

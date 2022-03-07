@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigurationServicePlaceholders } from 'aws-sdk/lib/config_service_placeholders';
 import { User } from 'src/auth/user.entity';
@@ -12,18 +12,35 @@ export class MealService {
     private mealRepository: MealRepository,
   ) {}
 
-  async createMeal(createMealDto: CreateMealDto, user: User) {
+  async createMeal(
+    createMealDto: CreateMealDto,
+    user: User,
+    imageUrl?: string,
+  ) {
     // Create Meal
 
     const meal = this.mealRepository.create(createMealDto);
-    meal.user = user;
 
-    console.log('MEAL  ', meal);
+    console.log('MEAL INGREDIENTS ', createMealDto.ingredients);
+    meal.ingredients = createMealDto.ingredients;
+
+    console.log('MEAL INGREDIENTS ', meal);
+    meal.user = user;
+    meal.picture = imageUrl;
+
+    // console.log('MEAL  ', meal);
 
     return this.mealRepository.save(meal);
     //Create ingredients and assign meal to meal just created
 
     //Save meal
+  }
+  async removeMeal(id: string, user: User) {
+    const result = await this.mealRepository.delete({ id, user });
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
   }
 
   async findAll(user: User) {

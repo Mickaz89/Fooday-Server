@@ -24,10 +24,14 @@ export class Meal {
   name: string;
 
   @Column({ nullable: true })
+  picture: string;
+
+  @Column({ nullable: true })
   description: Date;
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.meal, {
     eager: true,
+    onDelete: 'CASCADE',
     cascade: true,
   })
   ingredients: Ingredient[];
