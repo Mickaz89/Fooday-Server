@@ -6,6 +6,7 @@ import { Reception } from 'src/receptions/reception.entity';
 import { ProductCategory } from 'src/product-category/product_category.entity';
 import { Meal } from 'src/meal/meal.entity';
 import { Ingredient } from 'src/ingredient/ingredient.entity';
+import { Recipes } from 'src/recipes/recipes.entity';
 
 @Entity()
 export class User {
@@ -24,10 +25,13 @@ export class User {
   @OneToMany((_type) => Meal, (meal) => meal.user, { eager: true })
   meals: Meal[];
 
-  @OneToMany((_type) => Ingredient, (ingredient) => ingredient.user, {
-    eager: true,
-  })
-  ingredients: Ingredient[];
+  @OneToMany((_type) => Recipes, (recipes) => recipes.user, { eager: true })
+  recipes: Recipes[];
+
+  // @OneToMany((_type) => Ingredient, (ingredient) => ingredient.user, {
+  //   eager: true,
+  // })
+  // ingredients: Ingredient[];
   // @OneToMany((_type) => Product, (product) => product.user, { eager: true })
   // products: Product[];
 

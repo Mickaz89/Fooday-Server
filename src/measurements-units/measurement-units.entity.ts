@@ -18,40 +18,21 @@ import { IngredientDetails } from 'src/ingredient-details/ingredient-details.ent
 import { RecipeIngredients } from 'src/recipe-ingredients/recipe-ingredients.entity';
 
 @Entity()
-export class Ingredient {
+export class MeasurementUnits {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  icon: string;
-
-  // @ManyToOne(() => Meal, (meal) => meal.ingredients, {
-  //   eager: false,
-  //   onDelete: 'CASCADE',
-  // })
-  // @JoinColumn()
-  // meal: Meal;
-
-  // @ManyToOne((_type) => User, (user) => user.ingredients, { eager: false })
-  // user: User;
-
   @Exclude()
   @OneToMany(
     (_type) => RecipeIngredients,
-    (recipeIngredients) => recipeIngredients.ingredient,
+    (recipeIngredients) => recipeIngredients.measurementUnit,
     { eager: true },
   )
   recipeIngredients: RecipeIngredients[];
 
-  @ManyToOne((_type) => IngredientCategory, (category) => category.ingredient, {
-    nullable: false,
-  })
-  category: IngredientCategory;
-
-  // @OneToOne(() => IngredientDetails, { onDelete: 'CASCADE' })
-  // @JoinColumn()
-  // details: IngredientDetails;
+  // @OneToOne(() => RecipeIngredients, { onDelete: 'CASCADE' })
+  // ingredient: RecipeIngredients;
 }

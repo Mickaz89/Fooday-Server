@@ -20,6 +20,19 @@ import { ProductCategoryController } from './product-category/product-category.c
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { MealModule } from './meal/meal.module';
 import { IngredientModule } from './ingredient/ingredient.module';
+import { IngredientCategoryModule } from './ingredient-category/ingredient-category.module';
+import { IngredientDetailsService } from './ingredient-details/ingredient-details.service';
+import { IngredientDetailsModule } from './ingredient-details/ingredient-details.module';
+import { RecipesModule } from './recipes/recipes.module';
+import { RecipeIngredientsController } from './recipe-ingredients/recipe-ingredients.controller';
+import { RecipeIngredientsService } from './recipe-ingredients/recipe-ingredients.service';
+import { RecipeIngredientsModule } from './recipe-ingredients/recipe-ingredients.module';
+import { MeasurementsUnitsController } from './measurements-units/measurements-units.controller';
+import { MeasurementsUnitsService } from './measurements-units/measurements-units.service';
+import { MeasurementsUnitsModule } from './measurements-units/measurements-units.module';
+import { MeasurementsQtyController } from './measurements-qty/measurements-qty.controller';
+import { MeasurementsQtyService } from './measurements-qty/measurements-qty.service';
+import { MeasurementsQtyModule } from './measurements-qty/measurements-qty.module';
 
 @Module({
   imports: [
@@ -61,14 +74,12 @@ import { IngredientModule } from './ingredient/ingredient.module';
     ReceptionsModule,
     MealModule,
     IngredientModule,
-  ],
-  providers: [SendgridService],
-  controllers: [
-    MailController,
-    ProductReceptionController,
-    ProductInventoryController,
-    ProductHealthController,
-    ProductCategoryController,
+    IngredientCategoryModule,
+    IngredientDetailsModule,
+    RecipesModule,
+    RecipeIngredientsModule,
+    MeasurementsUnitsModule,
+    MeasurementsQtyModule,
   ],
 })
 export class AppModule {}

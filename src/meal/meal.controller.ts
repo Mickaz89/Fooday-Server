@@ -27,48 +27,48 @@ export class MealController {
     private fileServices: FileService,
   ) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  async createMeal(
-    @Body() createMealDto: any,
-    @GetUser() user: User,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    // console.log('IMAGE URL meal ', createMealDto);
-    // console.log('MEAL NAME ', createMealDto._parts[0][1]);
-    // console.log('MEAL INGREDIENTS ', createMealDto._parts[1][0]);
-    // console.log('MEAL IMAGE', createMealDto._parts[2][1]);
-    console.log('IMAGE URL meal ', file);
+  // @Post()
+  // @UseInterceptors(FileInterceptor('image'))
+  // async createMeal(
+  //   @Body() createMealDto: any,
+  //   @GetUser() user: User,
+  //   @UploadedFile() file: Express.Multer.File,
+  // ) {
+  //   // console.log('IMAGE URL meal ', createMealDto);
+  //   // console.log('MEAL NAME ', createMealDto._parts[0][1]);
+  //   // console.log('MEAL INGREDIENTS ', createMealDto._parts[1][0]);
+  //   // console.log('MEAL IMAGE', createMealDto._parts[2][1]);
+  //   console.log('IMAGE URL meal ', file);
 
-    // const body = {
-    //   name: createMealDto._parts[0][1],
+  //   // const body = {
+  //   //   name: createMealDto._parts[0][1],
 
-    // }
-    // return this.fileServices.uploadPublicFile(
-    //   file.buffer,
-    //   body.name,
-    //   'image',
-    //   user,
-    // );
+  //   // }
+  //   // return this.fileServices.uploadPublicFile(
+  //   //   file.buffer,
+  //   //   body.name,
+  //   //   'image',
+  //   //   user,
+  //   // );
 
-    // Upload image
+  //   // Upload image
 
-    const image = await this.fileServices.uploadPublicFile(
-      file.buffer,
-      file.originalname,
-      'image',
-      user,
-    );
+  //   const image = await this.fileServices.uploadPublicFile(
+  //     file.buffer,
+  //     file.originalname,
+  //     'image',
+  //     user,
+  //   );
 
-    // console.log('CREATE MEAL DTO USER', user);
-    // console.log(
-    //   'CRETE MEAL DTO INGREDIENTS ',
-    //   JSON.parse(createMealDto.ingredients),
-    // );
-    createMealDto.ingredients = JSON.parse(createMealDto.ingredients);
-    console.log('CREATE MEAL DTO ', createMealDto);
-    return this.mealServices.createMeal(createMealDto, user, image.url);
-  }
+  //   // console.log('CREATE MEAL DTO USER', user);
+  //   // console.log(
+  //   //   'CRETE MEAL DTO INGREDIENTS ',
+  //   //   JSON.parse(createMealDto.ingredients),
+  //   // );
+  //   createMealDto.ingredients = JSON.parse(createMealDto.ingredients);
+  //   console.log('CREATE MEAL DTO ', createMealDto);
+  //   return this.mealServices.createMeal(createMealDto, user, image.url);
+  // }
 
   @Get()
   fetchMeals(@GetUser() user: User) {

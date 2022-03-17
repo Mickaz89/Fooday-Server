@@ -1,20 +1,50 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { User } from 'src/auth/user.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileService } from 'src/file/file.service';
 import { CreateIngredientDto } from './dtos/create-ingredient.dto';
 import { IngredientService } from './ingredient.service';
 
 @Controller('ingredient')
 @UseGuards(AuthGuard())
 export class IngredientController {
-  constructor(private ingredientServices: IngredientService) {}
+  constructor(
+    private ingredientServices: IngredientService,
+    private fileServices: FileService,
+  ) {}
 
   @Post()
-  createIngredient(
+  @UseInterceptors(FileInterceptor('image'))
+  async createIngredient(
     @Body() createIngredientDto: CreateIngredientDto,
-    @GetUser() user: User,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.ingredientServices.createIngredient(createIngredientDto, user);
+    // Upload image
+
+    const icon = await this.fileServices.uploadPublicFile(
+      file.buffer,
+      file.originalname,
+      'image',
+    );
+
+    console.log('IMAGE ', icon);
+
+    return this.ingredientServices.createIngredient(
+      createIngredientDto,
+      icon.url,
+    );
+  }
+
+  @Get()
+  findAllIngredients() {
+    return this.ingredientServices.findAllIngredients();
   }
 }

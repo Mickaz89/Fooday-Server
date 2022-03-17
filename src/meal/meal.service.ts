@@ -12,29 +12,29 @@ export class MealService {
     private mealRepository: MealRepository,
   ) {}
 
-  async createMeal(
-    createMealDto: CreateMealDto,
-    user: User,
-    imageUrl?: string,
-  ) {
-    // Create Meal
+  // async createMeal(
+  //   createMealDto: CreateMealDto,
+  //   user: User,
+  //   imageUrl?: string,
+  // ) {
+  //   // Create Meal
 
-    const meal = this.mealRepository.create(createMealDto);
+  //   const meal = this.mealRepository.create(createMealDto);
 
-    console.log('MEAL INGREDIENTS ', createMealDto.ingredients);
-    meal.ingredients = createMealDto.ingredients;
+  //   console.log('MEAL INGREDIENTS ', createMealDto.ingredients);
+  //   meal.ingredients = createMealDto.ingredients;
 
-    console.log('MEAL INGREDIENTS ', meal);
-    meal.user = user;
-    meal.picture = imageUrl;
+  //   console.log('MEAL INGREDIENTS ', meal);
+  //   meal.user = user;
+  //   meal.picture = imageUrl;
 
-    // console.log('MEAL  ', meal);
+  //   // console.log('MEAL  ', meal);
 
-    return this.mealRepository.save(meal);
-    //Create ingredients and assign meal to meal just created
+  //   return this.mealRepository.save(meal);
+  //   //Create ingredients and assign meal to meal just created
 
-    //Save meal
-  }
+  //   //Save meal
+  // }
   async removeMeal(id: string, user: User) {
     const result = await this.mealRepository.delete({ id, user });
 

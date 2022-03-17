@@ -29,12 +29,12 @@ export class Meal {
   @Column({ nullable: true })
   description: Date;
 
-  @OneToMany(() => Ingredient, (ingredient) => ingredient.meal, {
-    eager: true,
-    onDelete: 'CASCADE',
-    cascade: true,
-  })
-  ingredients: Ingredient[];
+  // @OneToMany(() => Ingredient, (ingredient) => ingredient.meal, {
+  //   eager: true,
+  //   onDelete: 'CASCADE',
+  //   cascade: true,
+  // })
+  // ingredients: Ingredient[];
 
   @ManyToOne((_type) => User, (user) => user.meals, { eager: false })
   user: User;

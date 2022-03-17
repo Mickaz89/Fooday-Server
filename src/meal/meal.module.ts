@@ -9,6 +9,6 @@ import { FileModule } from 'src/file/file.module';
 @Module({
   imports: [TypeOrmModule.forFeature([MealRepository]), AuthModule, FileModule],
   providers: [MealService],
-  controllers: [MealController]
+  controllers: [MealController],
 })
 export class MealModule {}

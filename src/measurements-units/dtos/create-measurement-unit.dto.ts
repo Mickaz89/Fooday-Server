@@ -1,10 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 import { IngredientCategory } from 'src/ingredient-category/ingredient-category.entity';
 
-export class CreateIngredientDto {
+export class CreateMeasurementUnitDto {
   @IsNotEmpty()
   name: string;
-
-  @IsNotEmpty()
-  category: IngredientCategory;
 }

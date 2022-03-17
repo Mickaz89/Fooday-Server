@@ -19,7 +19,7 @@ export class FileService {
     buffer: Buffer,
     name: string,
     type: string,
-    user: User,
+    user?: User,
   ) {
     const s3 = new S3();
     const uploadResult = await s3

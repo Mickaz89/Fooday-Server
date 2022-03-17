@@ -11,10 +11,30 @@ export class IngredientService {
     private ingredientRepository: IngredientRepository,
   ) {}
 
-  async createIngredient(createIngredientDto: CreateIngredientDto, user: User) {
+  async createIngredient(
+    createIngredientDto: CreateIngredientDto,
+    icon: string,
+  ) {
     return this.ingredientRepository.createIngredient(
       createIngredientDto,
-      user,
+      icon,
     );
   }
+
+  async findAllIngredients() {
+    const ingredients = await this.ingredientRepository.find({
+      relations: ['category'],
+    });
+    const result = groupBy(ingredients, 'category');
+
+    return ingredients;
+  }
+}
+
+function groupBy(array, key) {
+  return array.reduce(function (r, a) {
+    r[a.category.name] = r[a.category.name] || [];
+    r[a.category.name].push(a);
+    return r;
+  }, {});
 }
