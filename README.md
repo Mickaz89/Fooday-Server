@@ -8,4 +8,6 @@ This application is provided as-is, as a part of the [NestJS Zero to Hero course
 
 Be sure to have a postgreSQL server running you can also use a docker container.
 
+Create new env.stage.dev file , check the env.example file for this.
+
 
