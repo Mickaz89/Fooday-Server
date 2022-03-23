@@ -32,9 +32,12 @@ export class Recipes {
   description: string;
 
   @Column()
+  price: string;
+
+  @Column({ nullable: true })
   servingSize: number;
 
-  @Column()
+  @Column({ nullable: true })
   cookingTime: number;
 
   @OneToMany(

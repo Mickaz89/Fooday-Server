@@ -13,7 +13,7 @@ export class RecipesService {
     private recipesRepository: RecipesRepository,
   ) {}
   createRecipe(createRecipeDto: CreateRecipeDto, imageUrl: string, user: User) {
-    return this.recipesRepository.createRecipe(createRecipeDto, imageUrl,  user);
+    return this.recipesRepository.createRecipe(createRecipeDto, imageUrl, user);
   }
 
   findAllRecipes(user: User) {

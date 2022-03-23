@@ -10,11 +10,13 @@ export class RecipesRepository extends Repository<Recipes> {
     imageUrl: string,
     user: User,
   ) {
-    const { name, description, cookingTime, servingSize } = createRecipeDto;
+    const { name, description, price, cookingTime, servingSize } =
+      createRecipeDto;
 
     const recipeIngredient = this.create({
       name,
       description,
+      price,
       cookingTime,
       servingSize,
       picture: imageUrl,

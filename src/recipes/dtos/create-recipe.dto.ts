@@ -8,9 +8,12 @@ export class CreateRecipeDto {
   description: string;
 
   @IsNotEmpty()
+  price: string;
+
+  @IsOptional()
   servingSize: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   cookingTime: number;
 
   @IsNotEmpty()
