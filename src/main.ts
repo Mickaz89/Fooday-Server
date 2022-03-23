@@ -11,7 +11,7 @@ const whitelist = [
   'http://localhost:3000',
   'localhost' /** other domains if any */,
   'https://61e99e821eda4a5b05fe74d2--traqfood.netlify.app/',
-  'https:traqfood.netlify.app',
+  'https://traqfood.netlify.app',
   'http://localhost:19006',
   'http://10.100.102.3:19006',
   'http://127.0.0.1:19000',
