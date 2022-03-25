@@ -7,6 +7,7 @@ import { ProductCategory } from 'src/product-category/product_category.entity';
 import { Meal } from 'src/meal/meal.entity';
 import { Ingredient } from 'src/ingredient/ingredient.entity';
 import { Recipes } from 'src/recipes/recipes.entity';
+import { Customer } from 'src/customers/customers.entity';
 
 @Entity()
 export class User {
@@ -21,6 +22,9 @@ export class User {
 
   @OneToMany((_type) => Task, (task) => task.user, { eager: true })
   tasks: Task[];
+
+  @OneToMany((_type) => Customer, (customer) => customer.user, { eager: true })
+  customers: Customer[];
 
   @OneToMany((_type) => Meal, (meal) => meal.user, { eager: true })
   meals: Meal[];
