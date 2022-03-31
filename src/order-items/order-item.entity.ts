@@ -1,11 +1,16 @@
 import { Task } from '../tasks/task.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Product } from 'src/products/product.entity';
 import PublicFile from 'src/file/publicFile.entity';
@@ -15,37 +20,35 @@ import { Meal } from 'src/meal/meal.entity';
 import { Ingredient } from 'src/ingredient/ingredient.entity';
 import { Recipes } from 'src/recipes/recipes.entity';
 import { User } from 'src/auth/user.entity';
-import { Order } from 'aws-sdk/clients/mediaconvert';
+import { Customer } from 'src/customers/customers.entity';
+import { Order } from 'src/orders/order.entity';
 
 @Entity()
-export class Customer {
+export class OrderItem {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
+  @CreateDateColumn()
+  created_at: Date;
 
-  @Column({ nullable: true })
-  email: string;
-
-  @Column()
-  phone: string;
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @Column()
-  address: string;
+  quantity: number;
 
-  @Column({ nullable: true })
-  buildingType: string;
+  @ManyToOne(() => Order, (order) => order.products, {
+    eager: false,
+  })
+  order: Order;
 
-  @Column({ nullable: true })
-  floor: string;
+  @ManyToOne(() => Recipes, (products) => products.order, {
+    eager: false,
+    cascade: true,
+  })
+  product: Recipes;
 
-  @Column({ nullable: true })
-  appartment: string;
-
-  @ManyToOne(() => User, (user) => user.customers, { eager: false })
-  user: User;
-
-  @ManyToOne(() => Customer, (customer) => customer.orders, { eager: false })
-  orders: Order[];
+  // @OneToOne(() => Recipes)
+  // @JoinColumn()
+  // product: Recipes;
 }

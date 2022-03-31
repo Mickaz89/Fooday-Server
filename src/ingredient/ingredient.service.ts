@@ -13,16 +13,19 @@ export class IngredientService {
 
   async createIngredient(
     createIngredientDto: CreateIngredientDto,
-    icon: string,
+    user: User,
+    icon?: string,
   ) {
     return this.ingredientRepository.createIngredient(
       createIngredientDto,
+      user,
       icon,
     );
   }
 
-  async findAllIngredients() {
+  async findAllIngredients(user) {
     const ingredients = await this.ingredientRepository.find({
+      where: { user },
       relations: ['category'],
     });
     const result = groupBy(ingredients, 'category');

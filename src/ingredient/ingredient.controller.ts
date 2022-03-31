@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 import { FileService } from 'src/file/file.service';
 import { CreateIngredientDto } from './dtos/create-ingredient.dto';
 import { IngredientService } from './ingredient.service';
@@ -26,25 +28,30 @@ export class IngredientController {
   async createIngredient(
     @Body() createIngredientDto: CreateIngredientDto,
     @UploadedFile() file: Express.Multer.File,
+    @GetUser() user: User,
   ) {
     // Upload image
+    let icon = null;
+    if (file) {
+      icon = await this.fileServices.uploadPublicFile(
+        file.buffer,
+        file.originalname,
+        'image',
+        user,
+      );
 
-    const icon = await this.fileServices.uploadPublicFile(
-      file.buffer,
-      file.originalname,
-      'image',
-    );
-
-    console.log('IMAGE ', icon);
-
+      console.log('IMAGE ', icon);
+    }
+    console.log('USER ', user);
     return this.ingredientServices.createIngredient(
       createIngredientDto,
-      icon.url,
+      user,
+      icon ? icon.url : null,
     );
   }
 
   @Get()
-  findAllIngredients() {
-    return this.ingredientServices.findAllIngredients();
+  findAllIngredients(@GetUser() user: User) {
+    return this.ingredientServices.findAllIngredients(user);
   }
 }

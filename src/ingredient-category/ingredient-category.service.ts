@@ -16,6 +16,12 @@ export class IngredientCategoryService {
       createIngredientCategoryDto,
     );
 
+    category.user = user;
+
     return await this.ingredientCategoryRepository.save(category);
+  }
+
+  async fetchIngredientCategories(user: User) {
+    return await this.ingredientCategoryRepository.find({ where: { user } });
   }
 }

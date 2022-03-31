@@ -25,4 +25,7 @@ export class IngredientCategory {
 
   @OneToMany(() => Ingredient, (ingredient) => ingredient.category)
   ingredient: Ingredient;
+
+  @ManyToOne(() => User, (user) => user.ingredientCategories, { eager: false })
+  user: User;
 }

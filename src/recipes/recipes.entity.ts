@@ -16,6 +16,7 @@ import { User } from 'src/auth/user.entity';
 import { IngredientCategory } from 'src/ingredient-category/ingredient-category.entity';
 import { IngredientDetails } from 'src/ingredient-details/ingredient-details.entity';
 import { RecipeIngredients } from 'src/recipe-ingredients/recipe-ingredients.entity';
+import { Order } from 'src/orders/order.entity';
 
 @Entity()
 export class Recipes {
@@ -49,4 +50,10 @@ export class Recipes {
 
   @ManyToOne(() => User, (user) => user.recipes, { eager: false })
   user: User;
+
+  @ManyToOne(() => Order, (order) => order.products, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
+  order: Order;
 }

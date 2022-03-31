@@ -25,7 +25,7 @@ export class Ingredient {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   icon: string;
 
   // @ManyToOne(() => Meal, (meal) => meal.ingredients, {
@@ -35,8 +35,8 @@ export class Ingredient {
   // @JoinColumn()
   // meal: Meal;
 
-  // @ManyToOne((_type) => User, (user) => user.ingredients, { eager: false })
-  // user: User;
+  @ManyToOne((_type) => User, (user) => user.ingredients, { eager: false })
+  user: User;
 
   @Exclude()
   @OneToMany(

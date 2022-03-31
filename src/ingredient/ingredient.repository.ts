@@ -7,13 +7,15 @@ import { Ingredient } from './ingredient.entity';
 export class IngredientRepository extends Repository<Ingredient> {
   async createIngredient(
     createIngredientDto: CreateIngredientDto,
-    icon: string,
+    user: User,
+    icon?: string,
   ) {
     const { name, category } = createIngredientDto;
-
+    console.log('CREATE INGREDIENT REPOSITORY USER ', user);
     const ingredient = this.create({
       name,
       category,
+      user,
       icon,
     });
 

@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateCustomerDto {
-  @IsEmail()
+  @IsOptional()
   email: string;
 
   @IsString()

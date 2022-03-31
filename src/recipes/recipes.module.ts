@@ -17,5 +17,6 @@ import { FileModule } from 'src/file/file.module';
   ],
   providers: [RecipesService],
   controllers: [RecipesController],
+  exports: [TypeOrmModule],
 })
 export class RecipesModule {}

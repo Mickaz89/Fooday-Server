@@ -36,6 +36,12 @@ import { MeasurementsQtyModule } from './measurements-qty/measurements-qty.modul
 import { CustomersController } from './customers/customers.controller';
 import { CustomersService } from './customers/customers.service';
 import { CustomersModule } from './customers/customers.module';
+import { OrdersController } from './orders/orders.controller';
+import { OrdersService } from './orders/orders.service';
+import { OrdersModule } from './orders/orders.module';
+import { OrderItemsController } from './order-items/order-items.controller';
+import { OrderItemsService } from './order-items/order-items.service';
+import { OrderItemsModule } from './order-items/order-items.module';
 
 @Module({
   imports: [
@@ -84,6 +90,8 @@ import { CustomersModule } from './customers/customers.module';
     MeasurementsUnitsModule,
     MeasurementsQtyModule,
     CustomersModule,
+    OrdersModule,
+    OrderItemsModule,
   ],
 })
 export class AppModule {}
